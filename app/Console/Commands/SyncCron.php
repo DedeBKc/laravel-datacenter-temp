@@ -41,6 +41,7 @@ class SyncCron extends Command
         $lastSyncedEmpNo = Cache::get($cacheKey, 0); // Ambil ID terakhir dari cache
         $hasMore = true;
         $baseUrl = env('APP_URL');
+        $limit = 10;
 
         \Log::info($baseUrl);
         // \Log::info('Starting sync from emp_no: ' . $lastSyncedEmpNo);
@@ -50,7 +51,8 @@ class SyncCron extends Command
 
         do {
             // Mengambil data dari API
-            $response = Http::get("{$baseUrl}/employees/{$lastSyncedEmpNo}/50");
+            $response = Http::get("{$baseUrl}/employees/{$lastSyncedEmpNo}/{$limit}");
+            \Log::info('Limit: ' . $limit);
 
             if ($response->ok()) {
                 $data = $response->json();

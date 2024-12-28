@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 
 class SampleCron extends Command
 {
@@ -25,6 +27,10 @@ class SampleCron extends Command
      */
     public function handle()
     {
-        \Log::info('Cron command executed at: ' . date('H:i:s'));
+        try {
+            \Log::info('Cron command executed at: ' . date('H:i:s'));
+        } catch (\Exception $e) {
+            \Log::error('Sync failed: ' . $e->getMessage());
+        }
     }
 }
