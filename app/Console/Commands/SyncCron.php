@@ -44,7 +44,7 @@ class SyncCron extends Command
         $limit = 10;
 
         \Log::info($baseUrl);
-        // \Log::info('Starting sync from emp_no: ' . $lastSyncedEmpNo);
+        \Log::info('Starting sync from emp_no: ' . $lastSyncedEmpNo);
 
         // Menyimpan status apakah proses sync berhasil atau tidak
         $isSyncSuccessful = false;
@@ -52,8 +52,6 @@ class SyncCron extends Command
         do {
             // Mengambil data dari API
             $response = Http::get("{$baseUrl}/employees/{$lastSyncedEmpNo}/{$limit}");
-            \Log::info('Limit: ' . $limit);
-
             if ($response->ok()) {
                 $data = $response->json();
 
